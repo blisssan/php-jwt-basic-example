@@ -1,0 +1,65 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Authorization using JSON Web Tokens and PHP</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/signin.css" rel="stylesheet" />
+  </head>
+
+  <body class="text-center">
+    <main class="form-signin">
+      <button class="w-100 btn btn-lg btn-primary" type="button" id="loginBtn">
+        Sign in
+      </button>
+
+      <button class="w-100 btn btn-lg btn-primary mt-5" id="btnGetResource">
+        Get Workorders
+      </button>
+    </main>
+
+    <script>
+      const store = {};
+      const loginButton = document.querySelector('#loginBtn');
+      const btnGetResource = document.querySelector('#btnGetResource');
+      const form = document.forms[0];
+
+      // Inserts the jwt to the store object
+      store.setJWT = function (data) {
+        this.JWT = data;
+      };
+
+      loginButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        const res = await fetch('authenticate.php', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          },
+          body: JSON.stringify({
+            username: 'santhosh@example.com',
+            password: '123456',
+          }),
+        });
+
+        if (res.status >= 200 && res.status <= 299) {
+          const response = JSON.parse(await res.text());
+          store.setJWT(response.token);
+        } else {
+          console.log(res.status, res.statusText);
+        }
+      });
+
+      btnGetResource.addEventListener('click', async (e) => {
+        const res = await fetch('work_order_list.php', {
+          headers: {
+            Authorization: `Bearer ${store.JWT}`,
+          },
+        });
+        const workorders = await res.text();
+        console.log(workorders);
+      });
+    </script>
+  </body>
+</html>
