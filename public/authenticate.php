@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-require_once './helpers.php';
-require_once './jwt_helper.php';
+require_once './core/helpers.php';
+require_once './core/jwt_helper.php';
 
 /*
 * Dummy user object you can user your own model or associative array
