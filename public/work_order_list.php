@@ -3,7 +3,8 @@
 require_once './core/helpers.php';
 require_once './core/jwt_helper.php';
 
-$user;
+$userId;
+$userName;
 
 try {
     $payloadData = $jwtHelper->validate();
@@ -33,4 +34,6 @@ $workorders = [
     ['id' => 3, 'order_no' => 'ABC125'],
 ];
 
-jsonResponse($workorders);
+$data = ['workorders' => $workorders, 'user_id' => $userId, 'user_name' => $userName];
+
+jsonResponse($data);
