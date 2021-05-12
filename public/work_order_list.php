@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 require_once './core/helpers.php';
 require_once './core/jwt_helper.php';
 
