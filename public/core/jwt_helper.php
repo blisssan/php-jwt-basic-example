@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Firebase\JWT\JWT;
 
-require_once '../vendor/autoload.php';
+require_once __DIR__.'/../../vendor/autoload.php';
 
 class AuthException extends Exception
 {
